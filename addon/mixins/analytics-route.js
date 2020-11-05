@@ -16,8 +16,10 @@ export default Mixin.create({
             const screen_name = router.currentRouteName;
             const url = router.currentURL;
             firebase.analytics().then(analytics => {
-                analytics.setCurrentScreen(screen_name || url, { global: true });
-                analytics.logEvent("screen_view", { app_name, screen_name, url, app_version });
+                if (analytics) {
+                    analytics.setCurrentScreen(screen_name || url, { global: true });
+                    analytics.logEvent("screen_view", { app_name, screen_name, url, app_version });
+                }
             });
         });
     }

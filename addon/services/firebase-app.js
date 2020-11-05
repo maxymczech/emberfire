@@ -15,7 +15,7 @@ export default class FirebaseAppService extends Service.extend({
         super(...arguments);
         this.delete = () => getApp(this).delete();
         this.auth = () => resolve(import('firebase/auth')).then(() => getApp(this).auth());
-        this.analytics = () => resolve(import('firebase/analytics')).then(() => getApp(this).analytics());
+        this.analytics = () => resolve(import('firebase/analytics')).then(() => getApp(this).analytics && getApp(this).analytics());
         this.firestore = () => resolve(import('firebase/firestore')).then(() => getApp(this).firestore());
         this.messaging = () => resolve(import('firebase/messaging')).then(() => getApp(this).messaging());
         this.performance = () => resolve(import('firebase/performance')).then(() => getApp(this).performance());
