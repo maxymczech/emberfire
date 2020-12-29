@@ -85,6 +85,15 @@ export default class FirestoreAdapter extends DS.Adapter.extend({
     updateRecord(_store, type, snapshot) {
         const id = snapshot.id;
         const data = this.serialize(snapshot, { includeId: false });
+
+        if (snapshot && snapshot.adapterOptions && snapshot.adapterOptions.saveOnly && Array.isArray(snapshot.adapterOptions.saveOnly)) {
+          for (const key in data) {
+            if (!snapshot.adapterOptions.saveOnly.includes(key)) {
+              delete data[key];
+            }
+          }
+        }
+
         // TODO is this correct? e.g, clear dirty state and trigger didChange; what about failure?
         return docReference(this, type, id).then(doc => doc.update(data));
     }
